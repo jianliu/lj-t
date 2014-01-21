@@ -24,7 +24,7 @@ public final class ConnectionManager {
 
         dataSource.setUser("root");
         dataSource.setPassword("123456");
-        dataSource.setJdbcUrl("jdbc:mysql://192.168.100.17:3306/taobao_rank?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull");
+        dataSource.setJdbcUrl("jdbc:mysql://xxxx:3306/xxx?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull");
         dataSource.setDriverClass("com.mysql.jdbc.Driver");
         dataSource.setInitialPoolSize(3);
         dataSource.setMinPoolSize(1);

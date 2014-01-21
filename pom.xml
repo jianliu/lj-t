@@ -15,9 +15,7 @@
         <module>lucene-le</module>
         <module>lucene4.4-le</module>
         <module>UIK</module>
-        <module>solr-le</module>
         <module>XMLS</module>
-        <module>CrawlerFramework</module>
         <module>http-client</module>
     </modules>
     <properties>

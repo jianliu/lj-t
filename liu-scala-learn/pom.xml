@@ -9,7 +9,6 @@
     <version>1.0</version>
 
     <properties>
-        <appname>deal-monitor-core</appname>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <scala.version>2.9.2</scala.version>
         <slf4j.version>1.6.4</slf4j.version>
@@ -123,16 +122,10 @@
                 <artifactId>mybatis-generator-maven-plugin</artifactId>
                 <version>1.3.1</version>
                 <configuration>
-                    <configurationFile>F:\deal-sale-monitor\deal-monitor-core\src\main\resources\dev\mybatis\generatorConfig.xml</configurationFile>
+                    <configurationFile>dev\mybatis\generatorConfig.xml</configurationFile>
                     <overwrite>true</overwrite>
                 </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.tuan800</groupId>
-                        <artifactId>tuan800-mybatis</artifactId>
-                        <version>1.1-SNAPSHOT</version>
-                    </dependency>
-                </dependencies>
+
             </plugin>
         </plugins>
     </build>
@@ -248,9 +241,21 @@
             <version>5.1.13</version>
         </dependency>
         <dependency>
-            <groupId>com.tuan800</groupId>
-            <artifactId>tuan800-mybatis</artifactId>
-            <version>1.1-SNAPSHOT</version>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.0.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mybatis.generator</groupId>
+            <artifactId>mybatis-generator-maven-plugin</artifactId>
+            <version>1.3.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>1.6.2</version>
         </dependency>
         <!-- end JDBC tool setting -->
         <dependency>
@@ -325,16 +330,7 @@
         </dependency>
     </dependencies>
 
-    <distributionManagement>
-        <snapshotRepository>
-            <id>nexus-deploy</id>
-            <url>http://mvndeploy:8081/nexus/content/repositories/snapshots/</url>
-        </snapshotRepository>
-        <repository>
-            <id>nexus-deploy</id>
-            <url>http://mvndeploy:8081/nexus/content/repositories/releases</url>
-        </repository>
-    </distributionManagement>
+
 
     <!-- 不同的打包环境 -->
     <profiles>
