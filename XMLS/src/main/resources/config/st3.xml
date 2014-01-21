@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<employees>
+    <employee>
+        <name hehe="1" show="no">ddviplinux</name>
+        <sex>m</sex>
+        <age>30</age>
+    </employee>
+    <group>cd<date type="Gregorian calendar">2004-09-12</date></group>
+</employees>

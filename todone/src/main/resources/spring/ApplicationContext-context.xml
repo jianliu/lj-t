@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util-2.0.xsd   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd ">
+    <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
+
+    <util:properties id="jdbcProps" location="classpath:config/jdbc.properties"/>
+
+
+    <!--<context:property-placeholder properties-ref="redisProperties"/>-->
+
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+          destroy-method="close">
+        <property name="driverClass" value="#{jdbcProps['datasource.driverClassName']}"/>
+        <property name="jdbcUrl" value="#{jdbcProps['datasource.url']}"/>
+        <property name="user" value="#{jdbcProps['datasource.username']}"/>
+        <property name="password" value="#{jdbcProps['datasource.password']}"/>
+        <property name="acquireIncrement" value="#{jdbcProps['c3p0.acquireIncrement']}"/>
+        <property name="initialPoolSize" value="#{jdbcProps['c3p0.initialPoolSize']}"/>
+        <property name="minPoolSize" value="#{jdbcProps['c3p0.minPoolSize']}"/>
+        <property name="maxPoolSize" value="#{jdbcProps['c3p0.maxPoolSize']}"/>
+        <property name="maxIdleTime" value="#{jdbcProps['c3p0.maxIdleTime']}"/>
+        <property name="idleConnectionTestPeriod" value="#{jdbcProps['c3p0.idleConnectionTestPeriod']}"/>
+        <property name="maxStatements" value="#{jdbcProps['c3p0.maxStatements']}"/>
+        <property name="numHelperThreads" value="#{jdbcProps['c3p0.numHelperThreads']}"/>
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
+        <property name="mapperLocations">
+            <array>
+                <value>classpath*:mybatis/sqlmap/*.xml</value>
+            </array>
+        </property>
+    </bean>
+
+     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="model.mapper"/>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+    </bean>
+
+    <context:annotation-config/>
+    <context:component-scan base-package="model"/>
+</beans>

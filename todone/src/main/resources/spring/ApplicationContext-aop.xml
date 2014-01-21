@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+                http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+                http://www.springframework.org/schema/aop
+                http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+    <!--必须启用,用来扫描spring实例中的aspect类-->
+    <aop:aspectj-autoproxy/>
+    <!-- &lt;!&ndash; 启动 @AspectJ 支持 ,启用了<aop:aspectj-autoproxy/>后不是必须的&ndash;&gt;
+   <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"/>-->
+    <!--proxy-target-class="true"对没有实现接口的类使用极好，它强制使用cglib代理，而非jdk 的代理，
+    如果类没有实现某个接口则它是必须的-->
+    <aop:config proxy-target-class="true"/>
+    <!-- <aop:config proxy-target-class="true">
+        <aop:aspect id="SaveHelper" ref="saveHelper">
+            &lt;!&ndash;配置com.spring.service包下所有类或接口的所有方法&ndash;&gt;
+            <aop:pointcut id="businessService"
+                          expression="execution(* com.zhe800.couponcrawler.core.aop.AopTester.test(..))"/>
+            <aop:before pointcut-ref="businessService" method="before"/>
+            <aop:after pointcut-ref="businessService" method="after"/>
+            &lt;!&ndash;<aop:around pointcut-ref="businessService" method="doAround"/>&ndash;&gt;
+            &lt;!&ndash;<aop:after-throwing pointcut-ref="businessService" method="doThrowing" throwing="ex"/>&ndash;&gt;
+        </aop:aspect>
+    </aop:config>-->
+    <!--尽管它使用的aspect注解，但是仍需要注入到spring中，否则不能正常使用-->
+    <!--<bean id="saveHelper" class="com.zhe800.couponcrawler.core.aop.SaveHelper"/>-->
+
+    <bean id="cacheManager"
+          class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+        <property name="shared" value="true"/>
+    </bean>
+    <bean id="pageCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+        <property name="cacheManager" ref="cacheManager" />
+        <property name="cacheName" value="pageCache" />
+    </bean>
+    <bean id="methodCacheInterceptor" class="interceptor.MethodCacheInterceptor">
+        <property name="cache">
+            <ref local="pageCache" />
+        </property>
+    </bean>
+
+    <bean id="methodCachePointCut" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+        <property name="advice">
+            <ref local="methodCacheInterceptor" />
+        </property>
+        <property name="patterns">
+            <list>
+                <value>.*tellMeTime</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="mainController"
+          class="controller.MainController">
+    </bean>
+
+    <bean id="myService" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target">
+            <ref local="mainController" />
+        </property>
+        <property name="interceptorNames">
+            <list>
+                <value>methodCachePointCut</value>
+            </list>
+        </property>
+    </bean>
+
+</beans>
+
+

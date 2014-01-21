@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<xs:schema
+        xmlns="http://www.w3school.com.cn"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.w3school.com.cn"
+        elementFormDefault="qualified">
+
+    <!--定义根节点的属性-->
+    <xs:element name="boxs">
+        <!--复合元素type-->
+        <xs:complexType>
+            <xs:sequence>
+                <!--根节点的子节点，数量无限制，最小0个，最多 unbounded 表明是没有限制的-->
+                <xs:element name="box" type="boxinfo" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <!--根节点的属性，use=required表明他是必须的 其只能为正整数-->
+            <xs:attribute name="siteId" type="xs:positiveInteger" use="optional"/>
+        </xs:complexType>
+
+    </xs:element>
+
+    <xs:complexType name="boxinfo">
+
+        <!--元素必须按下面的顺序出现-->
+        <xs:sequence>
+            <!--类型为常用类型-->
+            <xs:element name="TString" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="TJsoup" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="TRegex" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+            <!--引用TBox-->
+            <xs:element ref="TBox" minOccurs="0" maxOccurs="unbounded"/>
+            <!--引用TNot-->
+            <xs:element ref="TNot" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <!--type=typeType-->
+        <xs:attribute name="type" type="typeType" use="required"/>
+        <xs:attribute name="info" type="xs:string" use="optional"/>
+
+    </xs:complexType>
+
+    <!--box里面内嵌了box-->
+    <xs:element name="TBox">
+
+        <xs:annotation>
+            <xs:documentation>
+                <![CDATA[
+                 复合元素type ,解决下面这样的情况，即TBox本身是box中的一个元素，而TBox里面又能包含box元素
+            <TBox>
+              <box type="and">
+                <TString>有效期fromtbox</TString>
+              </box>
+            </TBox>
+			]]>
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="box" type="boxinfo" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+
+    </xs:element>
+    <xs:element name="TNot">
+        <xs:annotation>
+            <xs:documentation>
+                <![CDATA[
+                 复合元素type ,解决下面这样的情况，即TNot本身是box中的一个元素，而TNot里面又能包含box元素
+            <TBox>
+              <box type="and">
+                <TString>有效期fromtbox</TString>
+              </box>
+            </TBox>
+			]]>
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="box" type="boxinfo" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+
+    </xs:element>
+
+    <!--限定type属性的范围，只能是and或者or-->
+    <xs:simpleType name="typeType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="and"/>
+            <xs:enumeration value="or"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

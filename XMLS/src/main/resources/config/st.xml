@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<employees>
+    <employee>
+        <name hehe="1" show="yes">ddviplinux</name>
+        <sex>m</sex>
+        <age>30</age>
+    </employee>
+    <group>
+      成都抓取
+    </group>
+</employees>

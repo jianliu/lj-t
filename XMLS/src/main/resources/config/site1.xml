@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<boxs siteId="1"
+      xmlns="http://www.w3school.com.cn"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.w3school.com.cn
+     st.xsd">
+
+    <box type="and" info="TipInfo">
+        <TString>有效期</TString>
+        <TJsoup>div#team_main_side div.detail p:contains(温馨提示) + ol</TJsoup>
+        <TRegex>活动说明|温馨提示</TRegex>
+        <TBox>
+            <box type="and">
+                <TString>有效期fromtbox</TString>
+            </box>
+        </TBox>
+        <TNot>
+            <box type="and">
+                <TString>有效期fromtnot</TString>
+                <TJsoup>div#team_main_side div.detail p:contains(温馨提示) + ol</TJsoup>
+                <TRegex>活动说明|温馨提示</TRegex>
+                <TBox/>
+                <TNot/>
+            </box>
+        </TNot>
+    </box>
+    <box type="or" info="ShopInfo">
+        <TString>有效期</TString>
+        <TString>有效期2</TString>
+        <TJsoup>div#team_main_side div.detail p:contains(温馨提示) + ol</TJsoup>
+        <TRegex>活动说明|温馨提示</TRegex>
+        <TBox>
+            <box type="and">
+                <TString>有效期fromtbox</TString>
+            </box>
+        </TBox>
+        <TNot>
+            <box type="or">
+                <TString>有效期fromtnot</TString>
+            </box>
+        </TNot>
+    </box>
+
+    <box type="or" info="ExpiredTime">
+        <TString>有效期</TString>
+        <TJsoup>div#team_main_side div.detail p:contains(温馨提示) + ol</TJsoup>
+        <TRegex>活动说明|温馨提示</TRegex>
+        <TNot>
+            <box type="or">
+                <TString>有效期fromtnot</TString>
+            </box>
+        </TNot>
+    </box>
+    <box type="and" info="Category">
+    </box>
+
+
+</boxs>

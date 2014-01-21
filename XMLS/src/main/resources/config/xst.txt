@@ -1,0 +1,3 @@
+xmlns:xs="http://www.w3.org/2001/XMLSchema"
+
+显示 schema 中用到的元素和数据类型来自命名空间 "http://www.w3.org/2001/XMLSchema"。同时它还规定了来自命名空间 "http://www.w3.org/2001/XMLSchema" 的元素和数据类型应该使用前缀 xs：
