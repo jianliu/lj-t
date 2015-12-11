@@ -14,19 +14,7 @@
     <!--proxy-target-class="true"对没有实现接口的类使用极好，它强制使用cglib代理，而非jdk 的代理，
     如果类没有实现某个接口则它是必须的-->
     <aop:config proxy-target-class="true"/>
-    <!-- <aop:config proxy-target-class="true">
-        <aop:aspect id="SaveHelper" ref="saveHelper">
-            &lt;!&ndash;配置com.spring.service包下所有类或接口的所有方法&ndash;&gt;
-            <aop:pointcut id="businessService"
-                          expression="execution(* com.zhe800.couponcrawler.core.aop.AopTester.test(..))"/>
-            <aop:before pointcut-ref="businessService" method="before"/>
-            <aop:after pointcut-ref="businessService" method="after"/>
-            &lt;!&ndash;<aop:around pointcut-ref="businessService" method="doAround"/>&ndash;&gt;
-            &lt;!&ndash;<aop:after-throwing pointcut-ref="businessService" method="doThrowing" throwing="ex"/>&ndash;&gt;
-        </aop:aspect>
-    </aop:config>-->
-    <!--尽管它使用的aspect注解，但是仍需要注入到spring中，否则不能正常使用-->
-    <!--<bean id="saveHelper" class="com.zhe800.couponcrawler.core.aop.SaveHelper"/>-->
+ 
 
     <bean id="cacheManager"
           class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
